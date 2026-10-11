@@ -1,10 +1,19 @@
+import Navbar from "@/components/landing/Navbar";
+import HeroSection from "@/components/landing/HeroSection";
+import RoomGrid from "@/components/landing/RoomGrid";
+import Amenities from "@/components/landing/Amenities";
+import Footer from "@/components/landing/Footer";
+
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex items-center justify-center p-8 text-center">
-      <div>
-        <h1 className="text-4xl font-serif text-slate-900 mb-4">Grand Oasis Hotel</h1>
-        <p className="text-slate-600">Luxury Beachfront Resort & Spa</p>
-      </div>
-    </main>
+    <div className="min-h-screen flex flex-col bg-slate-50">
+      <Navbar />
+      <main className="flex-1">
+        <HeroSection />
+        <RoomGrid />
+        <Amenities />
+      </main>
+      <Footer />
+    </div>
   );
 }
