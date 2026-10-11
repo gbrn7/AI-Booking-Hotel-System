@@ -1,4 +1,5 @@
 import { Sparkles, User, ShieldAlert } from "lucide-react";
+import { formatChatText } from "@/lib/formatChat";
 
 interface ChatMessageProps {
   sender: "user" | "assistant" | "agent_tool" | "human_agent";
@@ -64,7 +65,7 @@ export default function ChatMessage({ sender, content, timestamp }: ChatMessageP
                 </div>
               )}
 
-              <div className="whitespace-pre-wrap">{bubbleText}</div>
+              <div className="whitespace-pre-wrap">{formatChatText(bubbleText)}</div>
 
               {hasBookingCode && (
                 <div className="mt-2.5 p-2.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-[11px] text-amber-900">

@@ -8,6 +8,7 @@ import {
   toggleTakeover,
   sendStaffReply,
 } from "@/lib/api";
+import { formatChatText } from "@/lib/formatChat";
 import {
   MessageSquare,
   Send,
@@ -290,7 +291,7 @@ export default function TakeoverChat() {
                                 )}
                               </div>
                             )}
-                            <div className="whitespace-pre-wrap">{bubbleText}</div>
+                            <div className="whitespace-pre-wrap">{formatChatText(bubbleText)}</div>
                           </div>
                         ))}
                       </div>
