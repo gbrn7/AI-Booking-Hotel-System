@@ -247,39 +247,52 @@ export default function TakeoverChat() {
                 messages.map((m) => {
                   const isUser = m.sender === "user";
                   const isStaff = m.sender === "human_agent";
+                  const bubbles = (m.content || "")
+                    .split(/\[next\]/i)
+                    .map((b) => b.trim())
+                    .filter(Boolean);
+                  const displayBubbles = bubbles.length > 0 ? bubbles : [m.content];
+
                   return (
                     <div
                       key={m.id}
                       className={`flex gap-3 ${isUser ? "justify-start" : "justify-end"}`}
                     >
-                      <div
-                        className={`max-w-[70%] rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-sm ${
-                          isUser
-                            ? "bg-white border border-slate-200 text-slate-800"
-                            : isStaff
-                            ? "bg-emerald-600 text-white"
-                            : "bg-slate-900 text-white"
-                        }`}
-                      >
-                        <div className="flex items-center gap-1.5 font-bold mb-1 opacity-80 text-[10px]">
-                          {isUser ? (
-                            <>
-                              <User className="w-3 h-3" />
-                              <span>Tamu</span>
-                            </>
-                          ) : isStaff ? (
-                            <>
-                              <ShieldAlert className="w-3 h-3" />
-                              <span>Staf Resepsionis (Anda)</span>
-                            </>
-                          ) : (
-                            <>
-                              <Sparkles className="w-3 h-3 text-brand-400" />
-                              <span>Rama (Concierge AI)</span>
-                            </>
-                          )}
-                        </div>
-                        <div className="whitespace-pre-wrap">{m.content}</div>
+                      <div className={`flex flex-col gap-1.5 max-w-[70%] ${isUser ? "items-start" : "items-end"}`}>
+                        {displayBubbles.map((bubbleText, bIdx) => (
+                          <div
+                            key={bIdx}
+                            className={`rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-sm ${
+                              isUser
+                                ? "bg-white border border-slate-200 text-slate-800"
+                                : isStaff
+                                ? "bg-emerald-600 text-white"
+                                : "bg-slate-900 text-white"
+                            }`}
+                          >
+                            {bIdx === 0 && (
+                              <div className="flex items-center gap-1.5 font-bold mb-1 opacity-80 text-[10px]">
+                                {isUser ? (
+                                  <>
+                                    <User className="w-3 h-3" />
+                                    <span>Tamu</span>
+                                  </>
+                                ) : isStaff ? (
+                                  <>
+                                    <ShieldAlert className="w-3 h-3" />
+                                    <span>Staf Resepsionis (Anda)</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Sparkles className="w-3 h-3 text-brand-400" />
+                                    <span>Rama (Concierge AI)</span>
+                                  </>
+                                )}
+                              </div>
+                            )}
+                            <div className="whitespace-pre-wrap">{bubbleText}</div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   );

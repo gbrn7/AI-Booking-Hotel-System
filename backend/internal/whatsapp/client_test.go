@@ -23,6 +23,16 @@ func TestSplitBubbles(t *testing.T) {
 	if bubbles[1] != "Ada yang bisa kami bantu?" {
 		t.Errorf("unexpected bubble 1: %q", bubbles[1])
 	}
+
+	// Test lowercase [next] and mixed case
+	inputLower := "Bubble satu\n\n[next]\n\nBubble dua\n[Next]\nBubble tiga"
+	bubblesLower := SplitBubbles(inputLower)
+	if len(bubblesLower) != 3 {
+		t.Fatalf("expected 3 bubbles for case-insensitive test, got %d", len(bubblesLower))
+	}
+	if bubblesLower[0] != "Bubble satu" || bubblesLower[1] != "Bubble dua" || bubblesLower[2] != "Bubble tiga" {
+		t.Errorf("unexpected bubbles: %v", bubblesLower)
+	}
 }
 
 func TestCalculateTypingDuration(t *testing.T) {

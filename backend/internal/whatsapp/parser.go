@@ -1,8 +1,11 @@
 package whatsapp
 
 import (
+	"regexp"
 	"strings"
 )
+
+var bubbleSplitRegex = regexp.MustCompile(`(?i)\[next\]`)
 
 type IncomingMessage struct {
 	Phone     string
@@ -76,7 +79,7 @@ func ExtractIncoming(payload map[string]any) *IncomingMessage {
 
 // SplitBubbles separates text containing [NEXT] into distinct chat bubbles.
 func SplitBubbles(reply string) []string {
-	parts := strings.Split(reply, "[NEXT]")
+	parts := bubbleSplitRegex.Split(reply, -1)
 	var bubbles []string
 	for _, p := range parts {
 		trimmed := strings.TrimSpace(p)

@@ -50,12 +50,24 @@ export default function LiveChatWidget() {
       .then((res) => res.json())
       .then((data) => {
         if (data.messages && data.messages.length > 0) {
-          const loaded: MessageItem[] = data.messages.map((m: any) => ({
-            id: String(m.id),
-            sender: m.sender === "user" ? "user" : m.sender === "human_agent" ? "human_agent" : "assistant",
-            content: m.content,
-            timestamp: new Date(m.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-          }));
+          const loaded: MessageItem[] = [];
+          data.messages.forEach((m: any) => {
+            const rawContent = m.content || "";
+            const bubbles = rawContent
+              .split(/\[next\]/i)
+              .map((b: string) => b.trim())
+              .filter(Boolean);
+            const items = bubbles.length > 0 ? bubbles : [rawContent];
+
+            items.forEach((text: string, idx: number) => {
+              loaded.push({
+                id: `${m.id}-${idx}`,
+                sender: m.sender === "user" ? "user" : m.sender === "human_agent" ? "human_agent" : "assistant",
+                content: text,
+                timestamp: new Date(m.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+              });
+            });
+          });
           setMessages(loaded);
         }
       })
@@ -130,15 +142,22 @@ export default function LiveChatWidget() {
             try {
               const parsed = JSON.parse(jsonStr);
               if (parsed.type === "bubble" || parsed.type === "takeover") {
-                setMessages((prev) => [
-                  ...prev,
-                  {
-                    id: "asst-" + Date.now() + "-" + Math.random(),
-                    sender: parsed.type === "takeover" ? "human_agent" : "assistant",
-                    content: parsed.content,
-                    timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-                  },
-                ]);
+                const rawContent = parsed.content || "";
+                const bubbles = rawContent
+                  .split(/\[next\]/i)
+                  .map((b: string) => b.trim())
+                  .filter(Boolean);
+                const items = bubbles.length > 0 ? bubbles : [rawContent];
+
+                const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                const newItems: MessageItem[] = items.map((text: string, idx: number) => ({
+                  id: "asst-" + Date.now() + "-" + idx + "-" + Math.random().toString(36).substring(2, 7),
+                  sender: parsed.type === "takeover" ? ("human_agent" as const) : ("assistant" as const),
+                  content: text,
+                  timestamp: timeStr,
+                }));
+
+                setMessages((prev) => [...prev, ...newItems]);
               }
             } catch {
               // Ignore malformed chunks
