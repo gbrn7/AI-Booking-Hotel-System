@@ -9,11 +9,11 @@ export default function Footer() {
           {/* Brand info */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-full bg-brand-500 text-white flex items-center justify-center font-serif text-lg font-bold">
+              <div className="w-9 h-9 rounded-full bg-brand-500 text-white flex items-center justify-center text-lg font-bold">
                 G
               </div>
               <div>
-                <span className="font-serif text-lg tracking-wider font-bold block text-white">
+                <span className="text-lg tracking-wider font-bold block text-white">
                   GRAND OASIS
                 </span>
                 <span className="text-[9px] tracking-widest text-brand-400 uppercase font-semibold">

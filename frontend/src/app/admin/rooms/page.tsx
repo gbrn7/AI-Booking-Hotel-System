@@ -38,7 +38,7 @@ export default function RoomsAdminPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-slate-900">
+          <h1 className="text-2xl font-bold text-slate-900">
             Inventori Tipe Kamar Hotel
           </h1>
           <p className="text-xs text-slate-500 font-light mt-0.5">
@@ -89,7 +89,7 @@ export default function RoomsAdminPage() {
                   </div>
 
                   <div className="p-5">
-                    <h3 className="font-serif font-bold text-slate-900 text-base mb-1">
+                    <h3 className="font-bold text-slate-900 text-base mb-1">
                       {room.name}
                     </h3>
                     <p className="text-xs text-slate-500 line-clamp-2 mb-4 font-light">
@@ -123,7 +123,7 @@ export default function RoomsAdminPage() {
                 <div className="p-5 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between">
                   <div>
                     <span className="text-[10px] text-slate-400 block">Tarif Dasar</span>
-                    <span className="font-bold text-slate-900 font-serif text-sm">
+                    <span className="font-bold text-slate-900 text-sm">
                       {formatPrice(room.base_price_per_night)}
                     </span>
                   </div>

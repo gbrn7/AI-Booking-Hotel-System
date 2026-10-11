@@ -41,7 +41,7 @@ export default function Amenities() {
           <span className="text-xs font-semibold tracking-widest text-brand-600 uppercase mb-2 block">
             FASILITAS & PENGALAMAN RESOR
           </span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
             Kemewahan Lengkap Untuk Setiap Momen
           </h2>
           <p className="text-slate-600 text-sm sm:text-base font-light">
@@ -58,7 +58,7 @@ export default function Amenities() {
               <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-600 mb-6 shadow-sm group-hover:scale-110 transition-transform">
                 <item.icon className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-serif font-bold text-slate-900 mb-2">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {item.title}
               </h3>
               <p className="text-sm text-slate-500 leading-relaxed font-light">

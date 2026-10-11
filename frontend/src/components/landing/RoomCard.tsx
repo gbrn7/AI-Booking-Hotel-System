@@ -65,7 +65,7 @@ export default function RoomCard({ room, onAskAI }: RoomCardProps) {
       {/* Content */}
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-xl font-serif font-bold text-slate-900 mb-2 group-hover:text-brand-600 transition-colors">
+          <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-600 transition-colors">
             {room.name}
           </h3>
           <p className="text-sm text-slate-500 line-clamp-2 mb-4 leading-relaxed font-light">
@@ -90,9 +90,9 @@ export default function RoomCard({ room, onAskAI }: RoomCardProps) {
         <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
           <div>
             <span className="text-xs text-slate-400 block font-light">Mulai dari</span>
-            <div className="text-lg font-bold text-slate-900 font-serif">
+            <div className="text-lg font-bold text-slate-900">
               {formatPrice(room.base_price_per_night)}
-              <span className="text-xs font-normal text-slate-500 font-sans"> /malam</span>
+              <span className="text-xs font-normal text-slate-500"> /malam</span>
             </div>
           </div>
 

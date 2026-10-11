@@ -20,11 +20,11 @@ export default function AdminSidebar() {
       {/* Brand */}
       <div className="p-6 border-b border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-brand-500 text-white flex items-center justify-center font-serif text-lg font-bold">
+          <div className="w-9 h-9 rounded-xl bg-brand-500 text-white flex items-center justify-center text-lg font-bold">
             G
           </div>
           <div>
-            <span className="font-serif text-base font-bold tracking-wider block">
+            <span className="text-base font-bold tracking-wider block">
               GRAND OASIS
             </span>
             <span className="text-[10px] text-brand-400 font-semibold tracking-widest uppercase">

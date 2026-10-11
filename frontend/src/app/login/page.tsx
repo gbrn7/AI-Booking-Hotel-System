@@ -36,10 +36,10 @@ export default function LoginPage() {
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl border border-slate-800">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-brand-500 text-white flex items-center justify-center font-serif text-2xl font-bold mx-auto mb-4 shadow-lg shadow-brand-500/25">
+          <div className="w-12 h-12 rounded-2xl bg-brand-500 text-white flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg shadow-brand-500/25">
             G
           </div>
-          <h1 className="text-2xl font-serif font-bold text-slate-900">
+          <h1 className="text-2xl font-bold text-slate-900">
             Grand Oasis Hotel
           </h1>
           <p className="text-xs text-slate-500 mt-1 uppercase tracking-widest font-semibold">

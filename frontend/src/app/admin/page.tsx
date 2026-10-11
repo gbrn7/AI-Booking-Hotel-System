@@ -72,7 +72,7 @@ export default function AdminDashboardPage() {
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI Concierge & Front Desk Synchronization</span>
           </div>
-          <h1 className="text-3xl font-serif font-bold tracking-tight mb-2">
+          <h1 className="text-3xl font-bold tracking-tight mb-2">
             Selamat Datang di Command Center Hotel
           </h1>
           <p className="text-sm text-slate-300 font-light leading-relaxed">
@@ -99,7 +99,7 @@ export default function AdminDashboardPage() {
                   <c.icon className="w-4 h-4" />
                 </div>
               </div>
-              <div className="text-3xl font-serif font-bold text-slate-900 mb-1">
+              <div className="text-3xl font-bold text-slate-900 mb-1">
                 {c.value}
               </div>
               <p className="text-xs text-slate-400 font-light">{c.subtitle}</p>
@@ -121,7 +121,7 @@ export default function AdminDashboardPage() {
               <ShieldAlert className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif font-bold text-slate-900 text-base">
+              <h3 className="font-bold text-slate-900 text-base">
                 Antrean Verifikasi Booking HOLD
               </h3>
               <p className="text-xs text-slate-500 font-light">
@@ -144,7 +144,7 @@ export default function AdminDashboardPage() {
               <MessageSquare className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif font-bold text-slate-900 text-base">
+              <h3 className="font-bold text-slate-900 text-base">
                 Live Takeover Center
               </h3>
               <p className="text-xs text-slate-500 font-light">

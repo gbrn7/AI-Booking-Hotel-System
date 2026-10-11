@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import LiveChatWidget from "@/components/chat/LiveChatWidget";
+import { plusJakartaSans } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Grand Oasis Hotel — Luxury Beachfront Resort & Spa",
@@ -13,11 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
-      <body className="min-h-screen bg-slate-50 text-slate-900 antialiased relative">
+    <html lang="id" className={plusJakartaSans.variable}>
+      <body className={`${plusJakartaSans.className} min-h-screen bg-slate-50 text-slate-900 antialiased relative`}>
         {children}
         <LiveChatWidget />
       </body>
     </html>
   );
 }
+

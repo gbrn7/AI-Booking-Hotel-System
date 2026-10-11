@@ -17,7 +17,7 @@ export default function HeroSection() {
           <span>Bintang 5 Beachfront Sanctuary</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif text-slate-900 tracking-tight font-bold max-w-4xl mx-auto leading-tight mb-6">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl text-slate-900 tracking-tight font-bold max-w-4xl mx-auto leading-tight mb-6">
           Menemukan Kedamaian Elegan di Pesisir Samudra
         </h1>
 

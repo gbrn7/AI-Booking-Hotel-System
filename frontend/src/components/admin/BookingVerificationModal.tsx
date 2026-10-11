@@ -46,7 +46,7 @@ export default function BookingVerificationModal({
         <div className="p-6 bg-slate-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <ShieldCheck className="w-5 h-5 text-brand-400" />
-            <h3 className="text-base font-serif font-bold">Verifikasi Pembayaran Reservasi</h3>
+            <h3 className="text-base font-bold">Verifikasi Pembayaran Reservasi</h3>
           </div>
           <button
             onClick={onClose}
@@ -102,7 +102,7 @@ export default function BookingVerificationModal({
                 <CreditCard className="w-3.5 h-3.5 text-brand-400" />
                 <span>Total Tagihan Booking</span>
               </span>
-              <span className="font-serif text-xl font-bold text-brand-400">
+              <span className="text-xl font-bold text-brand-400">
                 {formatPrice(booking.total_price)}
               </span>
             </div>
