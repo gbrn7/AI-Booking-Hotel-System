@@ -88,11 +88,13 @@ AI-Booking-Hotel-System/
 │   │   ├── lib/              # API client, NextAuth configuration, helper utils
 │   │   └── types/            # TypeScript interfaces
 │   ├── package.json
-│   └── tailwind.config.ts
+│   ├── tailwind.config.ts
+│   └── Dockerfile            # Multi-stage Dockerfile Next.js (Standalone output)
 ├── docs/
 │   └── superpowers/
 │       └── specs/            # Design specifications
-├── docker-compose.yml        # PostgreSQL, Backend, Frontend
+├── container.sh              # Skrip otomasi multi-platform (Docker & Podman detection)
+├── docker-compose.yml        # PostgreSQL, Go Backend, Next.js Frontend, Evolution API
 └── .env.example
 ```
 
@@ -249,10 +251,44 @@ di mana $\text{count\_booked\_units}(D)$ menghitung seluruh booking pada kamar t
 
 ---
 
-## 8. Verification & Success Criteria
+## 8. Multi-Platform Containerization (Docker & Podman)
+
+### 8.1 Dockerfiles
+* **`backend/Dockerfile`**:
+  - Multi-stage build Go dengan binary statis (`CGO_ENABLED=0 GOOS=linux`).
+  - Runtime minimal `alpine:3.20` atau `distroless/static-debian12` dengan CA-certificates & tzdata Asia/Jakarta.
+* **`frontend/Dockerfile`**:
+  - Multi-stage build Node.js (Alpine).
+  - Menggunakan fitur Next.js standalone (`output: "standalone"` di `next.config.mjs`) untuk ukuran image ringan (~100MB).
+
+### 8.2 Multi-Service `docker-compose.yml`
+* **`db`**: PostgreSQL 16 Alpine, port `5432`, volume persisten `./data/postgres:/var/lib/postgresql/data:Z` (dukungan SELinux Podman flag `:Z`).
+* **`backend`**: Go Gin Server & Agent Engine, port `8080`, depend on `db`.
+* **`frontend`**: Next.js App, port `3000`, depend on `backend`.
+* **`evolution-api` (opsional profile)**: Evolution API v2 untuk gateway WhatsApp lokal, port `8083`.
+
+### 8.3 Skrip Otomasi `container.sh`
+Mengadaptasi `container.sh` dari `AI-Sales-Agent-Workshop-Go`:
+* Mendeteksi otomatis tool container: `podman-compose`, `podman compose`, `docker compose`, atau `docker-compose`.
+* Mendeteksi engine: `podman` atau `docker`.
+* Menangani volume permission rootless Podman (label `:Z` dan `userns: keep-id`).
+* Menyediakan perintah praktis:
+  - `./container.sh build` : Build image backend & frontend
+  - `./container.sh up` : Jalankan seluruh stack (DB + Backend + Frontend)
+  - `./container.sh up:full` : Jalankan stack lengkap termasuk Evolution API
+  - `./container.sh down` : Matikan seluruh container
+  - `./container.sh logs` : Streaming log container
+  - `./container.sh cli` : Jalankan interactive CLI simulator di dalam container backend
+  - `./container.sh status` : Cek healthcheck & container status
+
+---
+
+## 9. Verification & Success Criteria
 1. Agent mampu merekomendasikan kamar sesuai kriteria pengguna via chat.
 2. Tool calling (`check_room_availability`, `hold_booking`) tereksekusi dengan benar tanpa halusinasi inventori.
 3. Overbooking dicegah saat kuota unit kamar habis pada rentang tanggal yang diminta.
 4. Auto-cancelation berjalan ketika batas waktu status `HOLD` terlampaui.
 5. Tamu dapat chat via WhatsApp atau Web Chat Widget.
 6. Resepsionis dapat melakukan takeover chat dan mengonfirmasi pembayaran reservasi melalui Next.js Admin Dashboard.
+7. Aplikasi dapat di-build dan dijalankan dengan mulus baik di **Docker** maupun **Podman** melalui `./container.sh up`.
+
