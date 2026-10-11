@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hotel-backend
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=${APP_ENV:-production}
+      - PORT=${PORT:-8080}
+      - DB_DRIVER=${DB_DRIVER:-postgres}
+      - DB_HOST=${DB_HOST:-host.docker.internal}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USER=${DB_USER:-hotel_admin}
+      - DB_PASSWORD=${DB_PASSWORD:-hotel_secret_pass}
+      - DB_NAME=${DB_NAME:-hotel_booking_db}
+      - DB_SSLMODE=${DB_SSLMODE:-disable}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - HOLD_DURATION_MINUTES=${HOLD_DURATION_MINUTES:-120}
+      - EVOLUTION_API_URL=${EVOLUTION_API_URL:-http://host.docker.internal:8083}
+      - EVOLUTION_API_KEY=${EVOLUTION_API_KEY}
+      - EVOLUTION_INSTANCE=${EVOLUTION_INSTANCE:-hotel-sales-agent}
+      - EVOLUTION_INSTANCE_NAME=${EVOLUTION_INSTANCE_NAME:-hotel-sales-agent}
