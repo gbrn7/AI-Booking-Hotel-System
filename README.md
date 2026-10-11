@@ -104,7 +104,23 @@ cd AI-Booking-Hotel-System
 ./container.sh down
 ```
 
-### Opsi 2: Menjalankan Secara Lokal (Development)
+### Opsi 2: Menggunakan Docker Compose Mandiri (Backend / Frontend Saja)
+
+Jika Anda ingin menjalankan backend atau frontend secara mandiri dalam container:
+
+```bash
+# Menjalankan Backend mandiri (Port 8080):
+cd backend
+cp .env.example .env   # Sesuaikan konfigurasi DB & API key
+docker compose up -d
+
+# Menjalankan Frontend mandiri (Port 3000):
+cd frontend
+cp .env.example .env   # Opsional: sesuaikan URL backend jika berbeda
+docker compose up -d
+```
+
+### Opsi 3: Menjalankan Secara Lokal (Development)
 
 **Persyaratan**: Go 1.25+ dan Node.js 22+/24+.
 
