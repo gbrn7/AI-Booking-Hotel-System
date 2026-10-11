@@ -42,7 +42,8 @@ services:
       - HOLD_DURATION_MINUTES=${HOLD_DURATION_MINUTES:-120}
       - EVOLUTION_API_URL=${EVOLUTION_API_URL:-http://evolution-api:8083}
       - EVOLUTION_API_KEY=${EVOLUTION_API_KEY}
-      - EVOLUTION_INSTANCE_NAME=${EVOLUTION_INSTANCE_NAME:-hotel-sales-agent}
+      - EVOLUTION_INSTANCE=${EVOLUTION_INSTANCE:-${EVOLUTION_INSTANCE_NAME:-hotel-sales-agent}}
+      - EVOLUTION_INSTANCE_NAME=${EVOLUTION_INSTANCE:-${EVOLUTION_INSTANCE_NAME:-hotel-sales-agent}}
     depends_on:
       db:
         condition: service_healthy

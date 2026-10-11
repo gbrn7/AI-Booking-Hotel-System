@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -51,12 +52,22 @@ func LoadConfig() *Config {
 		SystemPromptPath:           getEnv("SYSTEM_PROMPT_PATH", "./prompts/system.txt"),
 		HoldDurationMinutes:        holdDuration,
 		ExpiryCheckIntervalSeconds: expiryInterval,
-		EvolutionAPIURL:            getEnv("EVOLUTION_API_URL", "http://localhost:8083"),
+		EvolutionAPIURL:            strings.TrimRight(getEnv("EVOLUTION_API_URL", "http://localhost:8083"), "/"),
 		EvolutionAPIKey:            getEnv("EVOLUTION_API_KEY", ""),
-		EvolutionInstanceName:      getEnv("EVOLUTION_INSTANCE_NAME", "hotel-sales-agent"),
+		EvolutionInstanceName:      getEnvWithFallback("EVOLUTION_INSTANCE", "EVOLUTION_INSTANCE_NAME", "hotel-sales-agent"),
 		WADebounceSeconds:          waDebounce,
 		NextAuthSecret:             getEnv("NEXTAUTH_SECRET", "default_secret_key_change_me"),
 	}
+}
+
+func getEnvWithFallback(primaryKey, fallbackKey, defaultVal string) string {
+	if val := os.Getenv(primaryKey); val != "" {
+		return val
+	}
+	if val := os.Getenv(fallbackKey); val != "" {
+		return val
+	}
+	return defaultVal
 }
 
 func getEnv(key, defaultVal string) string {
