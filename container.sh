@@ -104,8 +104,11 @@ cmd_up() {
 cmd_up_all() {
     print_banner
     ensure_data_dirs
-    echo "🚀 Menjalankan SEMUA layanan (termasuk WhatsApp Evolution API)..."
-    $COMPOSE_CMD --profile full up -d
+    if [ "$COMPOSE_CMD" = "podman-compose" ]; then
+        $COMPOSE_CMD up -d db backend frontend evolution-api
+    else
+        $COMPOSE_CMD --profile full up -d 2>/dev/null || $COMPOSE_CMD up -d db backend frontend evolution-api
+    fi
     echo ""
     echo "✅ Semua layanan berjalan!"
     echo "   - Frontend : http://localhost:3000"
