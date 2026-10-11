@@ -11,8 +11,6 @@ services:
       - "${PORT:-8080}:8080"
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    env_file:
-      - .env
     environment:
       - APP_ENV=${APP_ENV:-production}
       - PORT=${PORT:-8080}
