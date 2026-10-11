@@ -1,5 +1,5 @@
 # Stage 1: Build binary
-FROM golang:alpine AS builder
+FROM docker.io/library/golang:alpine AS builder
 WORKDIR /app
 ENV GOTOOLCHAIN=auto
 RUN apk add --no-cache git ca-certificates tzdata
@@ -10,7 +10,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /app/bin/server ./cmd/
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /app/bin/cli ./cmd/cli
 
 # Stage 2: Minimal runtime
-FROM alpine:3.20
+FROM docker.io/library/alpine:3.20
 RUN apk add --no-cache ca-certificates tzdata
 WORKDIR /app
 COPY --from=builder /app/bin/server /app/server
