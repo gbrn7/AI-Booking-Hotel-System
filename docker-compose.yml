@@ -20,6 +20,7 @@ services:
       retries: 5
 
   backend:
+    image: ${BACKEND_REGISTRY_URL}/${BACKEND_IMAGE_NAME}:${BACKEND_IMAGE_TAG}
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -49,6 +50,7 @@ services:
         condition: service_healthy
 
   frontend:
+    image: ${FRONTEND_REGISTRY_URL}/${FRONTEND_IMAGE_NAME}:${FRONTEND_IMAGE_TAG}
     build:
       context: ./frontend
       dockerfile: Dockerfile
