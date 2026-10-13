@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   backend:
+    image: ${BACKEND_REGISTRY_URL}/${BACKEND_IMAGE_NAME}:${BACKEND_IMAGE_TAG}
     build:
       context: .
       dockerfile: Dockerfile
