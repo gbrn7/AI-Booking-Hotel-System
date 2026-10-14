@@ -55,15 +55,25 @@ func (m *Memory) SaveMessage(sessionID, sender, content, thought string) error {
 		Update("last_message_at", time.Now()).Error
 }
 
-// GetRecentHistory retrieves recent messages and converts them to GenAI Content items.
+// GetRecentHistory retrieves the latest `limit` messages (in chronological order) as GenAI Content items.
 func (m *Memory) GetRecentHistory(sessionID string, limit int) ([]*genai.Content, error) {
 	var msgs []model.Message
 	err := m.db.Where("conversation_id = ?", sessionID).
-		Order("created_at asc").
+		Order("created_at desc").
 		Limit(limit).
 		Find(&msgs).Error
 	if err != nil {
 		return nil, err
+	}
+
+	// Restore chronological order (oldest first).
+	for i, j := 0, len(msgs)-1; i < j; i, j = i+1, j-1 {
+		msgs[i], msgs[j] = msgs[j], msgs[i]
+	}
+
+	// History should start with a user turn.
+	for len(msgs) > 0 && msgs[0].Sender != model.SenderUser {
+		msgs = msgs[1:]
 	}
 
 	var contents []*genai.Content

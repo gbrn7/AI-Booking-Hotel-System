@@ -137,7 +137,7 @@ func (db *DebounceBuffer) processBufferedMessages(phone string) {
 		return
 	}
 
-	history, err := db.mem.GetRecentHistory(sessionID, 10)
+	history, err := db.mem.GetRecentHistory(sessionID, 20)
 	if err != nil {
 		log.Printf("[Buffer] Failed to get conversation history: %v", err)
 	}

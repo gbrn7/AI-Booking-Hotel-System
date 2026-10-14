@@ -78,7 +78,7 @@ func (h *ChatHandler) HandleChatStream(c *gin.Context) {
 		return
 	}
 
-	history, err := h.mem.GetRecentHistory(sessionID, 10)
+	history, err := h.mem.GetRecentHistory(sessionID, 20)
 	if err != nil {
 		history = nil
 	}

@@ -79,13 +79,25 @@ func (a *Agent) RunAgent(ctx context.Context, history []*genai.Content, userMess
 		return mockReply, history, "Development mock mode (no GEMINI_API_KEY set)", nil
 	}
 
-	now := time.Now()
+	loc, err := time.LoadLocation("Asia/Jakarta")
+	if err != nil {
+		loc = time.FixedZone("WIB", 7*3600)
+	}
+	now := time.Now().In(loc)
 	weekday := int(now.Weekday())
 	dateCtx := fmt.Sprintf("Hari ini %s, %d %s %d (%s), pukul %02d:%02d WIB",
 		HariNama[weekday], now.Day(), BulanNama[now.Month()-1], now.Year(),
 		now.Format("2006-01-02"), now.Hour(), now.Minute())
 
 	userContext := fmt.Sprintf("[Konteks Sistem: %s. Nomor telepon/kontak tamu: %s]\n%s", dateCtx, customerPhone, userMessage)
+
+	// Handlers save the incoming message before loading history; drop it here to avoid sending it twice.
+	if n := len(history); n > 0 {
+		last := history[n-1]
+		if last.Role == "user" && len(last.Parts) == 1 && last.Parts[0].Text == userMessage {
+			history = history[:n-1]
+		}
+	}
 
 	contents := append([]*genai.Content{}, history...)
 	contents = append(contents, &genai.Content{
