@@ -13,6 +13,11 @@ cd "$SCRIPT_DIR"
 # 1. Detect Container Engine & Compose Tool
 # ------------------------------------------------------------------------------
 detect_tools() {
+    # Allow explicit overrides via environment variables
+    if [ -n "$COMPOSE_CMD" ] && [ -n "$ENGINE_CMD" ]; then
+        return 0
+    fi
+
     if command -v podman-compose >/dev/null 2>&1; then
         COMPOSE_CMD="podman-compose"
         ENGINE_CMD="podman"
@@ -25,15 +30,9 @@ detect_tools() {
     elif command -v docker-compose >/dev/null 2>&1; then
         COMPOSE_CMD="docker-compose"
         ENGINE_CMD="docker"
-    elif command -v podman >/dev/null 2>&1; then
-        COMPOSE_CMD="podman"
-        ENGINE_CMD="podman"
-    elif command -v docker >/dev/null 2>&1; then
-        COMPOSE_CMD="docker"
-        ENGINE_CMD="docker"
     else
-        echo "❌ Error: Tidak ditemukan 'docker' maupun 'podman' di sistem Anda."
-        echo "   Silakan instal Docker atau Podman terlebih dahulu."
+        echo "❌ Error: Tidak ditemukan Compose tool (podman-compose, podman compose, docker compose, atau docker-compose) di sistem Anda."
+        echo "   Silakan instal Docker Compose atau Podman Compose terlebih dahulu."
         exit 1
     fi
 }
@@ -95,7 +94,10 @@ cmd_up() {
     echo "🚀 Menjalankan Database, Backend Go, dan Frontend Next.js..."
     $COMPOSE_CMD up -d db backend frontend
     echo ""
-    echo "✅ Layanan berjalan!"
+    echo "🔍 Status Container:"
+    $COMPOSE_CMD ps
+    echo ""
+    echo "✅ Layanan siap diakses:"
     echo "   - Landing & Web Chat : http://localhost:3000"
     echo "   - Admin Dashboard    : http://localhost:3000/admin"
     echo "   - Go API Server      : http://localhost:8080"
@@ -110,10 +112,13 @@ cmd_up_all() {
         $COMPOSE_CMD --profile full up -d 2>/dev/null || $COMPOSE_CMD up -d db backend frontend evolution-api
     fi
     echo ""
-    echo "✅ Semua layanan berjalan!"
+    echo "🔍 Status Container:"
+    $COMPOSE_CMD ps
+    echo ""
+    echo "✅ Semua layanan siap diakses:"
     echo "   - Frontend : http://localhost:3000"
     echo "   - Backend  : http://localhost:8080"
-    echo "   - WhatsApp : http://localhost:8083"
+    echo "   - WhatsApp : http://localhost:8093"
 }
 
 cmd_down() {
